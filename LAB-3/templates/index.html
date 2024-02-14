@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Введите свой email:</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4">Введите свой email:</h2>
+        <form>
+            <div class="form-group row">
+                <label for="search" class="col-sm-2 col-form-label">E-mail:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control form-control-sm" id="search" name="search">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#search").autocomplete({
+                source: function(request, response){
+                    $.ajax({
+                        url: "/autocomplete",
+                        data: {search: request.term},
+                        dataType: "json",
+                        success: function(data){
+                            response(data.matching_results);
+                        }
+                    });
+                },
+                minLength: 0
+            });
+        });
+    </script>
+</body>
+</html>
